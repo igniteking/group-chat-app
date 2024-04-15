@@ -13,7 +13,7 @@ function ChatInput() {
       .insert([{ message: text, is_edit: false }])
       .select();
     if (error) {
-      toast(error.message);
+      toast.error(error.message);
     }
   };
   return (
