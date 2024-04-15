@@ -1,11 +1,18 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ListMessages from "./ListMessages";
+import { createClient } from "@/utils/supabase/server";
+import InitMessage from "@/utils/store/initMessages";
 
-function ChatMessages() {
+async function ChatMessages() {
+  const supabase = createClient();
+
+  const { data } = await supabase.from("messages").select("*, users(*)");
+
   return (
-    <div>
+    <Suspense fallback={<p>Loading...</p>}>
       <ListMessages />
-    </div>
+      <InitMessage messages={data || []} />
+    </Suspense>
   );
 }
 
