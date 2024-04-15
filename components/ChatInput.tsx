@@ -2,6 +2,7 @@
 import React from "react";
 import { Input } from "./ui/input";
 import { createClient } from "@/utils/supabase/browser";
+import { toast } from "sonner";
 
 function ChatInput() {
   const handleSendMessage = async (text: string) => {
@@ -11,8 +12,9 @@ function ChatInput() {
       .from("messages")
       .insert([{ message: text, is_edit: false }])
       .select();
-
-    alert(error?.message);
+    if (error) {
+      toast(error.message);
+    }
   };
   return (
     <div className="p-5 ">
