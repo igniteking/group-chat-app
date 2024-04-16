@@ -10,17 +10,25 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useMessage } from "@/utils/store/messages";
+import { IMessages, useMessage } from "@/utils/store/messages";
 import { createClient } from "@/utils/supabase/browser";
 import { toast } from "sonner";
 function EditAlert() {
   const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const actionMessage = useMessage((state) => state.actionMessage);
   const supabase = createClient();
+  const setOptimisticUpdateMessage = useMessage(
+    (state) => state.OptimisticUpdateMessage
+  );
 
   const handleEdit = async () => {
     const messageText = inputRef.current.value.trim();
     if (messageText) {
+      setOptimisticUpdateMessage({
+        ...actionMessage,
+        message: messageText,
+        is_edit: true,
+      } as IMessages);
       const { data, error } = await supabase
         .from("messages")
         .update({ message: messageText, is_edit: true })
@@ -33,6 +41,9 @@ function EditAlert() {
         toast.success("Successfully edited the message...");
       }
       document.getElementById("edit-trigger")?.click();
+    } else {
+      document.getElementById("edit-trigger")?.click();
+      document.getElementById("trigger-delete")?.click();
     }
   };
   return (

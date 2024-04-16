@@ -24,6 +24,9 @@ function Message({ message }: { message: IMessages }) {
             <h1 className="text-sm text-gray-400">
               {new Date(message.created_at).toDateString()}
             </h1>
+            {message.is_edit && (
+              <h1 className="text-sm text-gray-400">edited</h1>
+            )}
           </div>
           {message.users?.id === user?.id ? (
             <Actions message={message} />

@@ -35,14 +35,16 @@ export const useMessage = create<MessageState>()((set) => ({
         messages: state.messages.filter((message) => message.id !== messageId),
       };
     }),
-  OptimisticUpdateMessage: (messageId) =>
+  OptimisticUpdateMessage: (updateMessage) =>
     set((state) => {
       return {
-        messages: state.messages.filter((messageId) => {
-          if (message) => {
-              if (message.id === updateMessage) {
-                
-              }
+        messages: state.messages.filter((message) => {
+          if (message) {
+            if (message.id === updateMessage.id) {
+              message.message = updateMessage.message;
+              message.is_edit = updateMessage.is_edit;
+            }
+            return message;
           }
         }),
       };
