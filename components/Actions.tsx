@@ -12,8 +12,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Edit, MoreHorizontal, Trash2Icon } from "lucide-react";
+import { IMessages, useMessage } from "@/utils/store/messages";
 
-export function Actions() {
+export function Actions({ message }: { message: IMessages }) {
+  const setActionMessage = useMessage((state) => state.setActionMessage);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -29,7 +32,12 @@ export function Actions() {
               <Edit className="h-4" />
             </DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              document.getElementById("trigger-delete")?.click();
+              setActionMessage(message);
+            }}
+          >
             Delete
             <DropdownMenuShortcut>
               <Trash2Icon className="h-4" />

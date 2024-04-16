@@ -1,4 +1,4 @@
-import { IMessages } from "@/utils/store/messages";
+import { IMessages, useMessage } from "@/utils/store/messages";
 import Image from "next/image";
 import React from "react";
 import { Actions } from "./Actions";
@@ -25,7 +25,9 @@ function Message({ message }: { message: IMessages }) {
               {new Date(message.created_at).toDateString()}
             </h1>
           </div>
-          {message.users?.id === user?.id ? <Actions /> : null}
+          {message.users?.id === user?.id ? (
+            <Actions message={message} />
+          ) : null}
         </div>
         <p className="text-gray-300">{message.message}</p>
       </div>
