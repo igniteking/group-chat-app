@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,7 +27,12 @@ export function Actions({ message }: { message: IMessages }) {
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              document.getElementById("edit-trigger")?.click();
+              setActionMessage(message);
+            }}
+          >
             Edit
             <DropdownMenuShortcut>
               <Edit className="h-4" />

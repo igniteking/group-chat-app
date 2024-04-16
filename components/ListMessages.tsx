@@ -4,6 +4,7 @@ import { useMessage } from "@/utils/store/messages";
 import React from "react";
 import Message from "./Message";
 import { DeleteAlert } from "./DeleteAlert";
+import EditAlert from "./EditAlert";
 
 async function ListMessages() {
   const messages = useMessage((state) => state.messages);
@@ -16,6 +17,7 @@ async function ListMessages() {
         })}
       </div>
       <DeleteAlert />
+      <EditAlert />
     </div>
   );
 }
