@@ -12,7 +12,7 @@ function Message({ message }: { message: IMessages }) {
         <Image
           src={message.users?.avatar!}
           alt={`${message.users?.display_name}_pic`}
-          className=" rounded-full ring-2"
+          className=" rounded-full ring-2 ring-primary"
           width={40}
           height={40}
         />
