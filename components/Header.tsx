@@ -4,9 +4,12 @@ import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/browser";
 import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
+import { GithubIcon } from "lucide-react";
+import AuthPopUp from "./AuthPopUp";
 
 function Header({ user }: { user: User | null }) {
   const router = useRouter();
+  const supabase = createClient();
 
   const handleLogin = () => {
     const supabase = createClient();
@@ -23,6 +26,12 @@ function Header({ user }: { user: User | null }) {
     let { error } = await supabase.auth.signOut();
     router.refresh();
   };
+
+  const handleEmailLogin = async () => {
+    const { data, error } = await supabase.auth.signInAnonymously();
+    console.log({ data, error });
+    
+  };
   return (
     <div className="h-20">
       <div className="p-5 border-b flex items-center justify-between h-full">
@@ -36,7 +45,13 @@ function Header({ user }: { user: User | null }) {
         {user ? (
           <Button onClick={handleLogout}>Logout</Button>
         ) : (
-          <Button onClick={handleLogin}>Login</Button>
+          <>
+            <Button onClick={handleLogin}>
+              <GithubIcon />
+            </Button>
+            <Button onClick={handleEmailLogin}>Login</Button>
+            <AuthPopUp />
+          </>
         )}
       </div>
     </div>
